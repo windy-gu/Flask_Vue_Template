@@ -27,8 +27,8 @@ marshmallow = Marshmallow()
 
 def create_app(config_class=Config):
     app = Flask(__name__,
-                static_folder='/Users/windy/Documents/code/myself/test/vue-admin-template/dist/static',
-                template_folder='/Users/windy/Documents/code/myself/test/vue-admin-template/dist'
+                static_folder='/Users/gxf/Documents/code/myself/test/vue-admin-template/dist/static',
+                template_folder='/Users/gxf/Documents/code/myself/test/vue-admin-template/dist'
                 )
     app.config.from_object(config_class)
 
@@ -69,7 +69,7 @@ def register_logging(app):
         else:
             if not os.path.exists('logs'):
                 os.mkdir('logs')
-            file_handler = RotatingFileHandler(os.path.join(log_dir, 'flask_api.log'),maxBytes=1024 * 1024 * 50, backupCount=5, encoding='utf-8')
+            file_handler = RotatingFileHandler(os.path.join(log_dir, 'flask_api.log'), maxBytes=1024 * 1024 * 50, backupCount=5, encoding='utf-8')
             file_handler.setFormatter(logging.Formatter(
                 '%(asctime)s %(name)s %(levelname)s: %(message)s '
                 '[in %(pathname)s:%(lineno)d]'))
@@ -96,8 +96,8 @@ def register_blueprints(app):
     from app.books import books_bp
     app.register_blueprint(books_bp, url_prefix='/api/books')
 
-    from app.users import users_bp
-    app.register_blueprint(users_bp, url_prefix='/api/users')
+    from app.users import user_bp
+    app.register_blueprint(user_bp, url_prefix='/api/user')
 
 
 def register_errors(app):

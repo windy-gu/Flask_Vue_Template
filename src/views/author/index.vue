@@ -1,4 +1,4 @@
-<template>
+    <template>
   <div class="app-container">
     <!-- 添加作者信息按钮 -->
     <el-row :gutter="10" class="mb8">

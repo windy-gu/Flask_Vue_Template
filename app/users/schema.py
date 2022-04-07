@@ -13,6 +13,6 @@ class UserSchema(SQLAlchemySchema):
         model = User
         sqla_session = db.session
 
-    id = fields.Number(dump_only=True)
-    username = fields.String(required=True)
-    password = fields.String(required=True)
+    USER_NO = fields.Number(dump_only=True)
+    USER_NAME = fields.String(required=True)
+    PASSWORD = fields.String(required=True)
