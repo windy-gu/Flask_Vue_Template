@@ -28,13 +28,38 @@ def create_author():
 
 
 @author_bp.route('/list', methods=['GET'])
-def get_author_list():
+def get_authors_all_list():
     fetched = Author.query.all()
     author_schema = AuthorSchema(many=True, only=['first_name', 'last_name', 'id'])
     authors = author_schema.dump(fetched)
     print(authors)
     print(type(authors))
     return response_with(resp.SUCCESS_200, value={"responseData": authors})
+
+
+@author_bp.route('/list', methods=['POST'])
+def get_authors_list_by_paginate():
+    data = request.get_json()
+    print(data)
+    pageNum = int(data['pageNum'])
+    pageSize = int(data['pageSize'])
+    paginate = Author.query.paginate(page=pageNum, per_page=pageSize)
+    paginate_data = paginate.items
+    author_schema = AuthorSchema(many=True, only=['first_name', 'last_name', 'id'])
+    authors = author_schema.dump(paginate_data)
+    pagination = {}
+    print(authors)
+    print(type(authors))
+    return response_with(resp.SUCCESS_200,
+                         value={"list": authors,
+                                "pages": paginate.pages,
+                                "hasNextPage": paginate.has_next,
+                                "hasLastPage": paginate.has_prev,
+                                "lastPage": paginate.prev_num,
+                                "nextPage": paginate.next_num,
+                                "total": paginate.total,
+                                "pageNum": paginate.page,
+                                "pageSize": paginate.per_page})
 
 
 @author_bp.route('/list/<int:author_id>', methods=['GET'])
