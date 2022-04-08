@@ -26,10 +26,7 @@ marshmallow = Marshmallow()
 
 
 def create_app(config_class=Config):
-    app = Flask(__name__,
-                static_folder='/Users/gxf/Documents/code/myself/test/vue-admin-template/dist/static',
-                template_folder='/Users/gxf/Documents/code/myself/test/vue-admin-template/dist'
-                )
+    app = Flask(__name__)
     app.config.from_object(config_class)
 
     # 注册插件

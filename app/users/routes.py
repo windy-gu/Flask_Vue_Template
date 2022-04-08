@@ -35,7 +35,10 @@ def authenticate_user():
             return response_with(resp.SERVER_ERROR_404)
         if User.verify_hash(data['password'], current_user.PASSWORD):
             access_token = create_access_token(identity=data['username'])
-            return response_with(resp.SUCCESS_201, value={'message': 'Logged in as {}'.format(current_user.USER_NAME), "access_token":access_token})
+            return response_with(resp.SUCCESS_201, value={'message': 'Logged in as {}'.format(current_user.USER_NAME),
+                                                          "access_token": access_token,
+                                                          'name': current_user.USER_NAME,
+                                                          'avatar': current_user.AVATAR})
         else:
             return response_with(resp.UNAUTHORIZED_401)
     except Exception as e:
@@ -45,17 +48,18 @@ def authenticate_user():
 
 # 查询用户信息
 @user_bp.route('/user/info', methods=['POST'])
-def user_info():
+def get_user_info():
     try:
         data = request.get_json()
+        # current_user = User.find_by_username(data['username'])
         current_user = User.find_by_username(data['username'])
         if not current_user:
             return response_with(resp.SERVER_ERROR_404)
-        if User.verify_hash(data['password'], current_user.password):
-            access_token = create_access_token(identity=data['username'])
-            return response_with(resp.SUCCESS_201, value={'message': 'Logged in as {}'.format(current_user.username), "access_token":access_token})
+
         else:
-            return response_with(resp.UNAUTHORIZED_401)
+            return response_with(resp.SUCCESS_201, value={'avatar': current_user.AVATAR,
+                                                          'name': current_user.USER_NAME})
+
     except Exception as e:
         print(e)
         return response_with(resp.INVALID_INPUT_422)
