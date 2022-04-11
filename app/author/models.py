@@ -9,6 +9,7 @@ from datetime import datetime
 
 class Author(db.Model):
     __tablename__ = 'authors'
+    __tabel_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(20))
     last_name = db.Column(db.String(20))

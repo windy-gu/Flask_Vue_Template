@@ -4,6 +4,7 @@
 # 自定义了程序出现错误是的错误信息，统一的接口响应处理程序
 
 from flask import make_response, jsonify
+from flask_sqlalchemy import Pagination
 
 INVALID_FIELD_NAME_SENT_422 = {
     "http_code": 422,
@@ -84,6 +85,16 @@ SUCCESS_204 = {
 
 
 def response_with(response, value=None, message=None, error=None, headers={}, pagination=None):
+    """
+
+    :param response:
+    :param value:
+    :param message:
+    :param error:
+    :param headers:
+    :param pagination:
+    :return:
+    """
     result = {}
     if value is not None:
         result.update(value)
@@ -97,7 +108,14 @@ def response_with(response, value=None, message=None, error=None, headers={}, pa
         result.update({'errors': error})
 
     if pagination is not None:
-        result.update({'pagination': pagination})
+        result.update({"pages": pagination.pages,
+                       "hasNextPage": pagination.has_next,
+                       "hasLastPage": pagination.has_prev,
+                       "lastPage": pagination.prev_num,
+                       "nextPage": pagination.next_num,
+                       "total": pagination.total,
+                       "pageNum": pagination.page,
+                       "pageSize": pagination.per_page})
 
     headers.update({'Access-Control-Allow-Origin': '*'})
     headers.update({'server': 'Flask REST API'})
