@@ -31,6 +31,7 @@ def authenticate_user():
     try:
         data = request.get_json()
         current_user = User.find_by_username(data['username'])
+
         if not current_user:
             return response_with(resp.SERVER_ERROR_404)
         if User.verify_hash(data['password'], current_user.PASSWORD):

@@ -9,9 +9,9 @@ from app.utils.responses import response_with
 from app.utils import responses as resp
 
 
-def select_authors_by_pagination(pageNum=1, pageSize=10):
+def select_authors_by_pagination(pageNum:int=1, pageSize:int=10):
     """
-
+    通过pageNum，pageSize查询authors list数据
     :param pageNum:
     :param pageSize:
     :return:
@@ -22,3 +22,7 @@ def select_authors_by_pagination(pageNum=1, pageSize=10):
     return response_with(resp.SUCCESS_200,
                          value={"list": authors_list},
                          pagination=pagination)
+
+
+def update_author_info_by_id():
+    pass

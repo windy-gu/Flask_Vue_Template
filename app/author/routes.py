@@ -11,6 +11,7 @@ from app.author.schema import AuthorSchema
 from app.utils.responses import response_with
 from app.utils import responses as resp
 from app.author.author_service import get_authors_info
+from app.author.author_service import update_author_info
 
 
 @author_bp.route('/add', methods=['POST'])
@@ -65,17 +66,28 @@ def get_author_detail(author_id):
     return response_with(resp.SUCCESS_200, value={"responseData": author})
 
 
-@author_bp.route('/update/<int:id>', methods=['PUT'])
-def update_author_detail(id):
+# @author_bp.route('/update/<int:id>', methods=['PUT'])
+# def update_author_info(id):
+#     data = request.get_json()
+#     get_author = Author.query.get_or_404(id)
+#     get_author.first_name = data['first_name']
+#     get_author.last_name = data['last_name']
+#     db.session.add(get_author)
+#     db.session.commit()
+#     author_schema = AuthorSchema()
+#     author = author_schema.dump(get_author)
+#     return response_with(resp.SUCCESS_200, value={"responseData": author})
+
+
+@author_bp.route('/update/<int:id>', methods=['POST'])
+def update_author_info_by_id(id):
+    """
+    通过id修改author信息
+    :param id:
+    :return:
+    """
     data = request.get_json()
-    get_author = Author.query.get_or_404(id)
-    get_author.first_name = data['first_name']
-    get_author.last_name = data['last_name']
-    db.session.add(get_author)
-    db.session.commit()
-    author_schema = AuthorSchema()
-    author = author_schema.dump(get_author)
-    return response_with(resp.SUCCESS_200, value={"responseData": author})
+    return update_author_info(id=id, request_body=data)
 
 
 @author_bp.route('/modify/<int:id>', methods=['PATCH'])

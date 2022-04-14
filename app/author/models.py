@@ -13,7 +13,8 @@ class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(20))
     last_name = db.Column(db.String(20))
-    created = db.Column(db.DateTime, server_default=db.func.now())
+    createTime = db.Column(db.DateTime, server_default=db.func.now())
+    updateTime = db.Column(db.DateTime, server_default=db.func.now())
     books = db.relationship('Book', backref='Author', cascade="all, delete-orphan")
 
     def __init__(self, first_name, last_name):

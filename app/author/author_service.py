@@ -11,3 +11,10 @@ def get_authors_info(request_body: dict):
     pageSize = int(request_body['pageSize'])
     return select_authors_by_pagination(pageNum, pageSize)
 
+
+def update_author_info(id:int, request_body: dict):
+    first_name = request_body['first_name']
+    last_name = request_body['first_name']
+    pass
+
+
