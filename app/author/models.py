@@ -4,10 +4,11 @@
 
 
 from app import db
+from app.utils.database import DBModel
 from datetime import datetime
 
 
-class Author(db.Model):
+class Author(DBModel):
     __tablename__ = 'authors'
     __tabel_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

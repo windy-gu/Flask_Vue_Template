@@ -16,12 +16,18 @@ def select_authors_by_pagination(pageNum:int=1, pageSize:int=10):
     :param pageSize:
     :return:
     """
-    pagination = Author.query.paginate(page=pageNum, per_page=pageSize)
-    author_schema = AuthorSchema(many=True, only=['first_name', 'last_name', 'id'])
-    authors_list = author_schema.dump(pagination.items)
-    return response_with(resp.SUCCESS_200,
-                         value={"list": authors_list},
-                         pagination=pagination)
+    try:
+        pagination = Author.query.paginate(page=pageNum, per_page=pageSize)
+    except Exception as e:
+        print("No data")
+        return response_with(resp.SUCCESS_200,
+                             value={"list": None})
+    else:
+        author_schema = AuthorSchema(many=True, only=['first_name', 'last_name', 'id'])
+        authors_list = author_schema.dump(pagination.items)
+        return response_with(resp.SUCCESS_200,
+                             value={"list": authors_list},
+                             pagination=pagination)
 
 
 def update_author_info_by_id():
