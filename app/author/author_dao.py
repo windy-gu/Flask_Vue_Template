@@ -21,12 +21,12 @@ def select_authors_by_pagination(pageNum:int=1, pageSize:int=10):
     except Exception as e:
         print("No data")
         return response_with(resp.SUCCESS_200,
-                             value={"list": None})
+                             value={"responseData": None})
     else:
         author_schema = AuthorSchema(many=True, only=['first_name', 'last_name', 'id'])
         authors_list = author_schema.dump(pagination.items)
         return response_with(resp.SUCCESS_200,
-                             value={"list": authors_list},
+                             value={"responseData": authors_list},
                              pagination=pagination)
 
 

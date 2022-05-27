@@ -52,3 +52,14 @@ class User(DBModel, BaseColumn):
         print(password)
         print(hash)
         return sha256.verify(password, hash)
+
+
+class UserVerifyCode(DBModel, BaseColumn):
+    __table__ = 'USER_OPERATOR_VERIFY_CODE'
+    ID = db.Column(db.Integer, primary_key=True)
+    MOBILE = db.Column(db.String(64), comment='登录手机号')
+    VERIFY_CODE = db.Column(db.String(64), comment='验证码')
+    BIZ_ID = db.Column(db.String(64), comment='业务ID')
+    EXPIRES_TIME = db.Column(db.DateTime,  comment='过期时间')
+    IS_USED = db.Column(db.Integer, default=0, comment='是否使用(0：未使用；1：已使用)')
+    MAX_TIMES = db.Column(db.Integer, default=5, comment='最多重试次数')
