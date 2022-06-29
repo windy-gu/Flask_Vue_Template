@@ -55,7 +55,7 @@ class User(DBModel, BaseColumn):
 
 
 class UserVerifyCode(DBModel, BaseColumn):
-    __table__ = 'USER_OPERATOR_VERIFY_CODE'
+    __tablename__ = 'USER_OPERATOR_VERIFY_CODE'
     ID = db.Column(db.Integer, primary_key=True)
     MOBILE = db.Column(db.String(64), comment='登录手机号')
     VERIFY_CODE = db.Column(db.String(64), comment='验证码')

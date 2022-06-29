@@ -30,6 +30,7 @@ def create_user():
 def authenticate_user():
     try:
         data = request.get_json()
+        print(data)
         current_user = User.find_by_username(data['username'])
 
         if not current_user:
@@ -50,6 +51,25 @@ def authenticate_user():
 # 查询用户信息
 @user_bp.route('/user/info', methods=['POST'])
 def get_user_info():
+    try:
+        data = request.get_json()
+        # current_user = User.find_by_username(data['username'])
+        current_user = User.find_by_username(data['username'])
+        if not current_user:
+            return response_with(resp.SERVER_ERROR_404)
+
+        else:
+            return response_with(resp.SUCCESS_201, value={'avatar': current_user.AVATAR,
+                                                          'name': current_user.USER_NAME})
+
+    except Exception as e:
+        print(e)
+        return response_with(resp.INVALID_INPUT_422)
+
+
+# 发送验证码
+@user_bp.route('/user/sendSms', methods=['POST'])
+def send_verify_code():
     try:
         data = request.get_json()
         # current_user = User.find_by_username(data['username'])
