@@ -12,6 +12,7 @@ from app.users.dao.user_dao import select_by_username
 from app.common.id_generator import new_id
 from app.common.validator import check_is_blank
 from app.common.validator import check_is_not_blank
+from app.common.exceptions import ServiceError
 from app.users.models import UserVerifyCode
 from app.users.models import User
 from app.utils.responses import response_with
@@ -36,30 +37,34 @@ def check_mobile_verify_code(req):
 
 
 def user_register(req):
-    username = req["username"]
-    password = generate_hash(req["password"])
-    user = select_by_username(username)
-    check_is_blank(user, "当前用户已注册")
-    user_no = new_id()
-    User.insert(USER_NO=user_no,
-                USER_NAME=username,
-                PASSWORD=password)
-    return response_with(resp.SUCCESS_200, value={'code': '00000'})
+    try:
+        username = req["username"]
+        password = generate_hash(req["password"])
+        user = select_by_username(username)
+        check_is_blank(user, "当前用户已注册")
+        user_no = new_id()
+        User.insert(USER_NO=user_no,
+                    USER_NAME=username,
+                    PASSWORD=password)
+        return response_with(resp.SUCCESS_200, value={'code': '00000'})
+    except ServiceError as e:
+        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': '{}'.format(e)})
 
 
 def user_login(req):
-    username = req["username"]
-    password = req["password"]
-    user = select_by_username(username)
-    check_is_not_blank(user, "账号或密码不正确")
-    if verify_hash(password, user.PASSWORD):
-        access_token = create_access_token(identity=username)
-    user.update(LOGGED_IN=1)
-    return response_with(resp.SUCCESS_200, value={'message': 'Logged in as {}'.format(user.USER_NAME),
-                                                  'access_token': access_token,
-                                                  'name': user.USER_NAME,
-                                                  'avatar': user.AVATAR})
-
-
-
-
+    try:
+        username = req["username"]
+        password = req["password"]
+        user = select_by_username(username)
+        check_is_not_blank(user, "账号未注册")
+        if verify_hash(password, user.PASSWORD):
+            access_token = create_access_token(identity=username)
+            user.update(LOGGED_IN=1)
+            return response_with(resp.SUCCESS_200, value={'message': 'Logged in as {}'.format(user.USER_NAME),
+                                                          'access_token': access_token,
+                                                          'name': user.USER_NAME,
+                                                          'avatar': user.AVATAR})
+        else:
+            raise ServiceError("账号或密码错误")
+    except ServiceError as e:
+        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': '{}'.format(e)})

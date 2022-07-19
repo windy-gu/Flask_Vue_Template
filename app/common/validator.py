@@ -6,7 +6,7 @@
 from app.common.exceptions import ServiceError
 
 
-def check_is_blank(obj: any, error_msg: str = 'Validation failed', code: int = 422):
+def check_is_blank(obj: any, error_msg: str = 'Validation failed'):
     """
     检查obj对象是否为空，不为空则抛异常
     :param obj:
@@ -14,10 +14,10 @@ def check_is_blank(obj: any, error_msg: str = 'Validation failed', code: int = 4
     :return:
     """
     if obj:
-        raise ServiceError(msg=error_msg, code=code)
+        raise ServiceError(msg=error_msg)
 
 
-def check_is_not_blank(obj: any, error_msg: str = 'Validation failed', code: int = 422):
+def check_is_not_blank(obj: any, error_msg: str = 'Validation failed'):
     """
     检查obj对象是否为空，为空则抛异常
     :param obj:
@@ -25,4 +25,4 @@ def check_is_not_blank(obj: any, error_msg: str = 'Validation failed', code: int
     :return:
     """
     if not obj:
-        raise ServiceError(msg=error_msg, code=code)
+        raise ServiceError(msg=error_msg)

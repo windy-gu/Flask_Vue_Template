@@ -3,7 +3,6 @@
 # software: PyCharm
 
 from flask import request
-from flask_jwt_extended import create_access_token
 from app.users import user_bp
 from app.users.models import User
 from app.users.service.user_service import send_mobile_verify_code
@@ -16,24 +15,13 @@ from app.utils import responses as resp
 # 注册
 @user_bp.route('/register', methods=['POST'])
 def create_user():
-    try:
-        data = request.get_json()
-        return user_register(data)
-    except Exception as e:
-        print(e)
-        return response_with(resp.INVALID_INPUT_422)
+    return user_register(request.get_json())
 
 
 # 登录
 @user_bp.route('/login', methods=['POST'])
 def authenticate_user():
-    try:
-        data = request.get_json()
-        print(data)
-        return user_login(data)
-    except Exception as e:
-        print(e)
-        return response_with(resp.INVALID_INPUT_422)
+    return user_login(request.get_json())
 
 
 # 查询用户信息
@@ -58,13 +46,7 @@ def get_user_info():
 # 发送验证码
 @user_bp.route('/sendSms', methods=['POST'])
 def send_verify_code():
-    try:
-        data = request.get_json()
-        return send_mobile_verify_code(data)
-
-    except Exception as e:
-        print(e)
-        return response_with(resp.INVALID_INPUT_422)
+    return send_mobile_verify_code(request.get_json())
 
 
 # 查询验证码

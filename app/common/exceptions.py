@@ -10,10 +10,13 @@ class ServiceError(Exception):
     业务异常类
     """
 
-    def __init__(self, msg=None, code=None):
-        super().__init__(self)
+    def __init__(self, msg=None):
+        # super().__init__(self)
         self.message = msg
-        self.code = code
+        # self.code = code
+
+    def __str__(self):
+        return self.message
 
 
 class ParseError(Exception):
