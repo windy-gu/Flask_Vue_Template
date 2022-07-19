@@ -4,12 +4,10 @@
 
 from flask import request
 from flask_jwt_extended import create_access_token
-from app import db
 from app.users import user_bp
 from app.users.models import User
-from app.users.user_service import send_mobile_verify_code
-from app.users.models import UserVerifyCode
-from app.users.schema import UserSchema
+from app.users.service.user_service import send_mobile_verify_code
+from app.users.service.user_service import user_register
 from app.utils.responses import response_with
 from app.utils import responses as resp
 
@@ -19,9 +17,7 @@ from app.utils import responses as resp
 def create_user():
     try:
         data = request.get_json()
-        data['password'] = User.generate_hash(data['password'])
-        result = User.add_username(**data)
-        return response_with(resp.SUCCESS_201)
+        return user_register(data)
     except Exception as e:
         print(e)
         return response_with(resp.INVALID_INPUT_422)
@@ -51,7 +47,7 @@ def authenticate_user():
 
 
 # 查询用户信息
-@user_bp.route('/user/info', methods=['POST'])
+@user_bp.route('/userinfo', methods=['POST'])
 def get_user_info():
     try:
         data = request.get_json()
@@ -70,7 +66,7 @@ def get_user_info():
 
 
 # 发送验证码
-@user_bp.route('/user/sendSms', methods=['POST'])
+@user_bp.route('/sendSms', methods=['POST'])
 def send_verify_code():
     try:
         data = request.get_json()
@@ -82,7 +78,7 @@ def send_verify_code():
 
 
 # 查询验证码
-@user_bp.route('/user/checkSmsCode', methods=['POST'])
+@user_bp.route('/checkSmsCode', methods=['POST'])
 def check_verify_code():
     try:
         data = request.get_json()

@@ -6,6 +6,7 @@
 
 import random
 import datetime
+from passlib.hash import pbkdf2_sha256 as sha256
 
 
 def send_verify_code():
@@ -33,6 +34,15 @@ def get_expire_time(expired_time: int = 5):
     :return:
     """
     return str(datetime.datetime.now()+datetime.timedelta(minutes=expired_time))
+
+
+def generate_hash(password: str):
+    """
+    通过明文密码生成密文密码
+    :param password:    明文密码
+    :return:            密文密码
+    """
+    return sha256.hash(password)
 
 
 if __name__ == '__main__':

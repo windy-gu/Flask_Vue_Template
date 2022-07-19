@@ -17,7 +17,7 @@ class User(DBModel):
     __tablename__ = 'USERS_BASE_INFO'
 
     ID = db.Column(db.Integer, primary_key=True)
-    USER_NO = db.Column(db.Integer, index=True, unique=True, nullable=False, comment='用户编号')
+    USER_NO = db.Column(db.String(32), index=True, unique=True, nullable=False, comment='用户编号')
     USER_NAME = db.Column(db.String(128), unique=True, nullable=False, comment='用户名称')
     PASSWORD = db.Column(db.String(256), nullable=False, comment='用户密码')
     MOBILE = db.Column(db.String(16), comment='手机号')
