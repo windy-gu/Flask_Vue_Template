@@ -43,7 +43,6 @@ def timestamp_as_micro_s() -> int:
 
 def timestamp_to_strftime(format: str = STRFTIME_FORMAT, timestamp: float = 0):
     """时间戳转时间字符串
-
     :param format:      时间格式
     :param timestamp:   时间戳
     :return:            float
@@ -53,7 +52,6 @@ def timestamp_to_strftime(format: str = STRFTIME_FORMAT, timestamp: float = 0):
 
 def strftime_to_timestamp_as_ms(strftime: str, format: str = STRFTIME_FORMAT):
     """时间字符串转毫秒级时间戳
-
     :param strftime:    时间字符串
     :param format:      时间格式
     :return:            float
@@ -63,7 +61,6 @@ def strftime_to_timestamp_as_ms(strftime: str, format: str = STRFTIME_FORMAT):
 
 def change_strftime_format(strftime: str, old_format: str, new_format: str = STRFTIME_FORMAT):
     """更改时间字符串的格式
-
     :param strftime:    时间字符串
     :param old_format:  旧格式
     :param new_format:  新格式

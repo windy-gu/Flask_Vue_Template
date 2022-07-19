@@ -56,8 +56,12 @@ class CRUDMixin:
 
     def submit(self):
         """写入数据库但不提交"""
-        db.session.add(self)
-        db.session.flush()
+        try:
+            db.session.add(self)
+            # db.session.flush()
+            db.session.commit()
+        except Exception as e:
+            print(e)
 
 
 class DBModel(CRUDMixin, db.Model):

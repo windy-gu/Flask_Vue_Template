@@ -6,17 +6,17 @@
 from app import db
 from app.utils.database import DBModel
 from datetime import datetime
-
+from app.utils.time_util import datetime_now_by_utc8
 
 class Author(DBModel):
-    __tablename__ = 'authors'
+    __tablename__ = 'AUTHORS_INFO'
     __tabel_args__ = {'extend_existing': True}
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    first_name = db.Column(db.String(20))
-    last_name = db.Column(db.String(20))
-    createTime = db.Column(db.DateTime, server_default=db.func.now())
-    updateTime = db.Column(db.DateTime, server_default=db.func.now())
-    books = db.relationship('Book', backref='Author', cascade="all, delete-orphan")
+    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    FIRST_NAME = db.Column(db.String(20))
+    LAST_NAME = db.Column(db.String(20))
+    CREATED_TIME = db.Column(db.DateTime, default=datetime_now_by_utc8, comment='创建时间')
+    UPDATED_TIME = db.Column(db.DateTime, default=datetime_now_by_utc8, onupdate=datetime_now_by_utc8, comment='更新时间')
+    BOOKS = db.relationship('Book', backref='Author', cascade="all, delete-orphan")
 
     def __init__(self, first_name, last_name):
         self.first_name = first_name
