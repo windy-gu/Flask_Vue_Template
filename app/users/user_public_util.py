@@ -45,6 +45,16 @@ def generate_hash(password: str):
     return sha256.hash(password)
 
 
+def verify_hash(password, hash):
+    """
+    通过明文密码和密文密码，验证是否一致
+    :param password:
+    :param hash:
+    :return:
+    """
+    return sha256.verify(password, hash)
+
+
 if __name__ == '__main__':
     print(get_verify_code())
     print(str(datetime.datetime.now()+datetime.timedelta(minutes=5)))

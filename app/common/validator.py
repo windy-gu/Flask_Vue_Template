@@ -24,5 +24,5 @@ def check_is_not_blank(obj: any, error_msg: str = 'Validation failed', code: int
     :param error_msg:
     :return:
     """
-    if obj:
+    if not obj:
         raise ServiceError(msg=error_msg, code=code)

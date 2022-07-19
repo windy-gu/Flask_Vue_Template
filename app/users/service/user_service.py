@@ -7,12 +7,17 @@
 from app.users.user_public_util import get_verify_code
 from app.users.user_public_util import get_expire_time
 from app.users.user_public_util import generate_hash
+from app.users.user_public_util import verify_hash
 from app.users.dao.user_dao import select_by_username
 from app.common.id_generator import new_id
 from app.common.validator import check_is_blank
 from app.common.validator import check_is_not_blank
 from app.users.models import UserVerifyCode
 from app.users.models import User
+from app.utils.responses import response_with
+from app.utils import responses as resp
+
+from flask_jwt_extended import create_access_token
 
 
 def send_mobile_verify_code(req):
@@ -39,15 +44,21 @@ def user_register(req):
     User.insert(USER_NO=user_no,
                 USER_NAME=username,
                 PASSWORD=password)
-    return {'code': '00000'}
+    return response_with(resp.SUCCESS_200, value={'code': '00000'})
 
 
 def user_login(req):
     username = req["username"]
-    password = generate_hash(req["password"])
-    User.insert(USER_NAME=username,
-                PASSWORD=password)
-    return {'code': '00000'}
+    password = req["password"]
+    user = select_by_username(username)
+    check_is_not_blank(user, "账号或密码不正确")
+    if verify_hash(password, user.PASSWORD):
+        access_token = create_access_token(identity=username)
+    user.update(LOGGED_IN=1)
+    return response_with(resp.SUCCESS_200, value={'message': 'Logged in as {}'.format(user.USER_NAME),
+                                                  'access_token': access_token,
+                                                  'name': user.USER_NAME,
+                                                  'avatar': user.AVATAR})
 
 
 
