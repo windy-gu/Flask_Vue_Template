@@ -8,7 +8,6 @@ from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
 
-
 STRFTIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 

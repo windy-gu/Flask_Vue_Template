@@ -9,11 +9,6 @@ import datetime
 from passlib.hash import pbkdf2_sha256 as sha256
 
 
-def send_verify_code():
-
-    ...
-
-
 def get_verify_code(code_len: int = 6):
     """
     获取验证码

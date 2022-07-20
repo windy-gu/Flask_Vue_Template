@@ -4,8 +4,6 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.users.models import User
-from app.users.schema import UserSchema
 import os, sys
 
 

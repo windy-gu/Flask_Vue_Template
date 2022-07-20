@@ -3,12 +3,9 @@
 # software: PyCharm
 # 定义的用户名和密码两个内容。还增加了按用户名查找用户的方法、生成密码和验证密码的方法
 
-from app.utils.database import DBModel
 from app.utils.database import db
+from app.utils.database import DBModel
 from app.utils.time_util import datetime_now_by_utc8
-from app.users.user_public_util import *
-from marshmallow_sqlalchemy import SQLAlchemySchema
-from marshmallow import fields
 
 
 class User(DBModel):
@@ -27,12 +24,6 @@ class User(DBModel):
     UPDATED_TIME = db.Column(db.DateTime, default=datetime_now_by_utc8, onupdate=datetime_now_by_utc8, comment='更新时间')
     DELETED = db.Column(db.Integer, nullable=False, default=0, comment='是否为已删除的数据')
     REMARK = db.Column(db.String(64), comment='备注')
-
-    @staticmethod
-    def verify_hash(password, hash):
-        print(password)
-        print(hash)
-        return sha256.verify(password, hash)
 
 
 class UserVerifyCode(DBModel):
@@ -63,7 +54,3 @@ class T_Department(db.Model):
     __tablename__ = 't_department'
     id = db.Column(db.Integer, primary_key=True, comment='部门编号id')
     department = db.Column(db.String(64), comment='部门名称')
-
-
-
-
