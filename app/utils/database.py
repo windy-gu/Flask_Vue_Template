@@ -23,19 +23,19 @@ class CRUDMixin:
 
     @classmethod
     def filter(cls: MODEL, *args):
-        return cls.query.filter(cls.DELETED == 0, *args)
+        return cls.query.filter(*args)
 
     @classmethod
     def filter_by(cls: MODEL, **kwargs):
-        return cls.query.filter_by(DELETED=0, **kwargs)
+        return cls.query.filter_by(**kwargs)
 
     @classmethod
     def count_by(cls: MODEL, **kwargs) -> int:
-        return cls.query.session.query(func.count(cls.ID)).filter_by(DELETED=0, **kwargs).scalar() or 0
+        return cls.query.session.query(func.count(cls.ID)).filter_by(**kwargs).scalar() or 0
 
     @classmethod
     def avg_by(cls: MODEL, field, **kwargs) -> decimal.Decimal:
-        return cls.query.session.query(func.avg(field)).filter_by(DELETED=0, **kwargs).scalar() or 0
+        return cls.query.session.query(func.avg(field)).filter_by(**kwargs).scalar() or 0
 
     @classmethod
     def delete_filter(cls: MODEL, *args):
