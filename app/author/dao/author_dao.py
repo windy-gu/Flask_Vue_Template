@@ -18,11 +18,12 @@ def select_authors_by_pagination(pageNum: int=1, pageSize: int=10):
     """
     try:
         pagination = Author.query.paginate(page=pageNum, per_page=pageSize)
+        print(pagination.items)
     except Exception as e:
         return response_with(resp.SUCCESS_200,
                              value={"responseData": "".format(e)})
     else:
-        author_schema = AuthorSchema(many=True, only=['first_name', 'last_name', 'id'])
+        author_schema = AuthorSchema(many=True, only=['ID', 'NAME', 'PSEUDONYM'])
         authors_list = author_schema.dump(pagination.items)
         return response_with(resp.SUCCESS_200,
                              value={"responseData": authors_list},

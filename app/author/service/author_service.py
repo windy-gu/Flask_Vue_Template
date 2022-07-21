@@ -9,11 +9,9 @@ from app.utils.responses import response_with
 from app.utils import responses as resp
 
 
-def get_author_info(req):
+def author_list(req, pageNum: int=1, pageSize: int=10):
     try:
-        id = req['id']
-        author = Author.filter_by(ID=id)
-        return response_with(resp.SUCCESS_200, value={'code': '00000'})
+        return author_dao.select_authors_by_pagination(pageNum=pageNum, pageSize=pageSize)
     except Exception as e:
         return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 
