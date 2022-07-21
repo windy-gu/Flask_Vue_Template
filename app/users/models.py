@@ -22,7 +22,7 @@ class User(DBModel):
     LOGGED_IN = db.Column(db.Boolean, nullable=False, default=False, comment='是否已登录')
     CREATED_TIME = db.Column(db.DateTime, default=datetime_now_by_utc8, comment='创建时间')
     UPDATED_TIME = db.Column(db.DateTime, default=datetime_now_by_utc8, onupdate=datetime_now_by_utc8, comment='更新时间')
-    DELETED = db.Column(db.Integer, nullable=False, default=0, comment='是否为已删除的数据')
+    DELETED = db.Column(db.Integer, nullable=False, default=0, comment='是否为已删除的数据(0:正常, 1:已删除)')
     REMARK = db.Column(db.String(64), comment='备注')
 
 

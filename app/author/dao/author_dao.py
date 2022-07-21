@@ -9,7 +9,7 @@ from app.utils.responses import response_with
 from app.utils import responses as resp
 
 
-def select_authors_by_pagination(pageNum:int=1, pageSize:int=10):
+def select_authors_by_pagination(pageNum: int=1, pageSize: int=10):
     """
     通过pageNum，pageSize查询authors list数据
     :param pageNum:
@@ -21,7 +21,7 @@ def select_authors_by_pagination(pageNum:int=1, pageSize:int=10):
     except Exception as e:
         print("No data")
         return response_with(resp.SUCCESS_200,
-                             value={"responseData": None})
+                             value={"responseData": "".format(e)})
     else:
         author_schema = AuthorSchema(many=True, only=['first_name', 'last_name', 'id'])
         authors_list = author_schema.dump(pagination.items)
