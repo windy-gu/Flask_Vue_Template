@@ -10,29 +10,43 @@ from app.utils import responses as resp
 
 
 def get_author_info(req):
-    id = req['id']
-    author = Author.filter_by(ID=id)
-    return response_with(resp.SUCCESS_200, value={'code': '00000'})
+    try:
+        id = req['id']
+        author = Author.filter_by(ID=id)
+        return response_with(resp.SUCCESS_200, value={'code': '00000'})
+    except Exception as e:
+        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 
 
-def update_author(id, req):
-    name = req['name']
-    pseudonym = req['pseudonym']
-    author = Author.filter_by(ID=id)
-    author.update(NAME=name, PSEUDONYM=pseudonym)
-    return response_with(resp.SUCCESS_200, value={'code': '00000'})
+def update_author(req):
+    try:
+        id = req['id']
+        name = req['name']
+        pseudonym = req['pseudonym']
+        author = Author.filter_by(ID=id).first()
+        author.update(NAME=name, PSEUDONYM=pseudonym)
+        return response_with(resp.SUCCESS_200, value={'code': '00000'})
+    except Exception as e:
+        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 
 
-def delete_author(id):
-    Author.delete_filter_by(ID=id)
-    return response_with(resp.SUCCESS_200, value={'code': '00000'})
+def delete_author(req):
+    try:
+        print(req)
+        id = req['id']
+        author = Author.filter_by(ID=id).first()
+        author.delete()
+        return response_with(resp.SUCCESS_200, value={'code': '00000'})
+    except Exception as e:
+        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 
 
 def add_author(req):
-    name = req['name']
-    pseudonym = req['pseudonym']
-    Author.insert(NAME=name, PSEUDONYM=pseudonym)
-    return response_with(resp.SUCCESS_200, value={'code': '00000'})
-
-
+    try:
+        name = req['name']
+        pseudonym = req['pseudonym']
+        Author.insert(NAME=name, PSEUDONYM=pseudonym)
+        return response_with(resp.SUCCESS_200, value={'code': '00000'})
+    except Exception as e:
+        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 

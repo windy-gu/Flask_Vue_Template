@@ -19,7 +19,6 @@ def select_authors_by_pagination(pageNum: int=1, pageSize: int=10):
     try:
         pagination = Author.query.paginate(page=pageNum, per_page=pageSize)
     except Exception as e:
-        print("No data")
         return response_with(resp.SUCCESS_200,
                              value={"responseData": "".format(e)})
     else:

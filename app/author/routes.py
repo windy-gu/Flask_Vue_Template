@@ -4,14 +4,12 @@
 
 
 from flask import request
-from app import db
 from app.author import author_bp
 from app.author.models import Author
 from app.author.schema import AuthorSchema
 from app.utils.responses import response_with
 from app.utils import responses as resp
 from app.author.service import author_service
-# from app.author.service.author_service import update_author_info
 
 
 @author_bp.route('/add', methods=['POST'])
@@ -24,8 +22,6 @@ def authors_all_list():
     fetched = Author.query.all()
     author_schema = AuthorSchema(many=True, only=['first_name', 'last_name', 'id'])
     authors = author_schema.dump(fetched)
-    print(authors)
-    print(type(authors))
     return response_with(resp.SUCCESS_200, value={"responseData": authors})
 
 
@@ -56,27 +52,14 @@ def author_detail(author_id):
     return response_with(resp.SUCCESS_200, value={"responseData": author})
 
 
-# @author_bp.route('/update/<int:id>', methods=['PUT'])
-# def update_author_info(id):
-#     data = request.get_json()
-#     get_author = Author.query.get_or_404(id)
-#     get_author.first_name = data['first_name']
-#     get_author.last_name = data['last_name']
-#     db.session.add(get_author)
-#     db.session.commit()
-#     author_schema = AuthorSchema()
-#     author = author_schema.dump(get_author)
-#     return response_with(resp.SUCCESS_200, value={"responseData": author})
-
-
-@author_bp.route('/update/<int:id>', methods=['POST'])
-def update_author_info_by_id(id):
+@author_bp.route('/update', methods=['POST'])
+def update_author_info():
     """
     通过id修改author信息
     :param id:
     :return:
     """
-    return author_service.update_author(id, request.get_json())
+    return author_service.update_author(request.get_json())
 
 
 @author_bp.route('/modify/<int:id>', methods=['PATCH'])
@@ -84,6 +67,6 @@ def modify_author_detail(id):
     return author_service.update_author(id, request.get_json())
 
 
-@author_bp.route('/delete/<int:id>', methods=['DELETE'])
-def delete_author(id):
-    return author_service.delete_author(id)
+@author_bp.route('/delete', methods=['POST'])
+def delete_author():
+    return author_service.delete_author(request.get_json())
