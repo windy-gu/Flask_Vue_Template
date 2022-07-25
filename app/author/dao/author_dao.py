@@ -28,7 +28,3 @@ def select_authors_by_pagination(pageNum: int=1, pageSize: int=10):
         return response_with(resp.SUCCESS_200,
                              value={"responseData": authors_list},
                              pagination=pagination)
-
-
-def update_author_info_by_id():
-    pass
