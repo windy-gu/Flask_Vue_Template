@@ -34,7 +34,6 @@ def update_author(req):
 
 def delete_author(req):
     try:
-        print(req)
         id = req['id']
         author = Author.filter_by(ID=id).first()
         author.delete()

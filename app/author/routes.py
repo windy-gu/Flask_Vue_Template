@@ -30,7 +30,7 @@ def author_detail(author_id):
 
 
 @author_bp.route('/update', methods=['POST'])
-def update_author_info():
+def update_author():
     """
     通过id修改author信息
     :return:
