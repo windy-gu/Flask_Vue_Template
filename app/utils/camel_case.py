@@ -24,9 +24,11 @@ def to_lower_camel_case(x):
     return s[0].lower() + s[1:]
 
 
-def key_to_lower_camel_case(parameter_list: list):
+def list_key_to_lower_camel_case(parameter_list: list):
     """
     将返回的参数key进行小驼峰法转换
+    例如：[{'ID': 2.0, 'PSEUDONYM': '唐家三少', 'NAME': '张威'}]
+    例如：[{'id': 2.0, 'pseudonym': '唐家三少', 'name': '张威'}]
     :param parameter_list:
     :return:
     """
@@ -39,3 +41,17 @@ def key_to_lower_camel_case(parameter_list: list):
             temp_dict[k_result] = v
         target_list.append(temp_dict)
     return target_list
+
+
+def dict_key_to_upper(parameter_dict: dict):
+    """
+    将入参中的dict 参数key转换为全大写
+    :param parameter_dict:
+    :return:
+    """
+    target_dict = {}
+    for k, v in parameter_dict.items():
+        k_result = k.upper()
+        target_dict[k_result] = v
+    return target_dict
+

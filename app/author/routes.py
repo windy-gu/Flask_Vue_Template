@@ -48,7 +48,7 @@ def delete_author():
 
 
 @author_bp.route('/list', methods=['POST'])
-def author_list_by_id():
+def author_list():
     """
     查询author list数据
     :return:
