@@ -32,7 +32,7 @@ def select_authors_by_pagination(**kwargs):
             pageSize = 10
         pagination = Author.query.filter_by(DELETED=0, **dict_key_to_upper(kwargs)).paginate(page=pageNum, per_page=pageSize)
     except Exception as e:
-        return response_with(resp.INVALID_INPUT_422,
+        return response_with(resp.SQL_Execute_Error_10004,
                              value={"responseData": "".format(e)})
     else:
         author_schema = AuthorSchema(many=True, only=['ID', 'NAME', 'PSEUDONYM'])

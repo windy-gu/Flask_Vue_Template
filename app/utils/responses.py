@@ -74,6 +74,11 @@ SUCCESS_204 = {
     'rspInf': 'success'
 }
 
+SQL_Execute_Error_10004 = {
+    'http_code': '10004',
+    'rspInf': 'Sql execute error'
+}
+
 # {
 #     "rspInf": "success",
 #     "data": null,

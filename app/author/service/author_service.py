@@ -13,7 +13,7 @@ def author_list(req):
     try:
         return author_dao.select_authors_by_pagination(**req)
     except Exception as e:
-        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
+        return response_with(resp.SQL_Execute_Error_10004, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 
 
 def update_author(req):
@@ -25,7 +25,7 @@ def update_author(req):
         author.update(NAME=name, PSEUDONYM=pseudonym)
         return response_with(resp.SUCCESS_200, value={'code': '00000'})
     except Exception as e:
-        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
+        return response_with(resp.SQL_Execute_Error_10004, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 
 
 def delete_author(req):
@@ -35,7 +35,7 @@ def delete_author(req):
         author.delete()
         return response_with(resp.SUCCESS_200, value={'code': '00000'})
     except Exception as e:
-        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
+        return response_with(resp.SQL_Execute_Error_10004, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 
 
 def add_author(req):
@@ -45,5 +45,5 @@ def add_author(req):
         Author.insert(NAME=name, PSEUDONYM=pseudonym)
         return response_with(resp.SUCCESS_200, value={'code': '00000'})
     except Exception as e:
-        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
+        return response_with(resp.SQL_Execute_Error_10004, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 

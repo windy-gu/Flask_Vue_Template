@@ -17,7 +17,6 @@ from app.users.models import User
 from app.users.models import UserVerifyCode
 from app.utils.responses import response_with
 from app.utils import responses as resp
-
 from flask_jwt_extended import create_access_token
 
 
@@ -31,7 +30,7 @@ def send_mobile_verify_code(req):
                               EXPIRES_TIME=code_expire_time)
         return response_with(resp.SUCCESS_200, value={'code': '00000'})
     except Exception as e:
-        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
+        return response_with(resp.SQL_Execute_Error_10004, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 
 
 def check_mobile_verify_code(req):
@@ -41,7 +40,7 @@ def check_mobile_verify_code(req):
         return response_with(resp.SUCCESS_200, value={'code': '00000',
                                                       'verify_code': '{}'.format(verify_list.VERIFY_CODE)})
     except Exception as e:
-        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
+        return response_with(resp.SQL_Execute_Error_10004, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 
 
 def user_register(req):
@@ -56,7 +55,7 @@ def user_register(req):
                     PASSWORD=password)
         return response_with(resp.SUCCESS_200, value={'code': '00000'})
     except ServiceError as e:
-        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': '{}'.format(e)})
+        return response_with(resp.SQL_Execute_Error_10004, value={'Exception': '{}'.format(e)})
 
 
 def user_login(req):
@@ -76,7 +75,7 @@ def user_login(req):
         else:
             raise ServiceError("账号或密码错误")
     except ServiceError as e:
-        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': '{}'.format(e)})
+        return response_with(resp.SQL_Execute_Error_10004, value={'Exception': '{}'.format(e)})
 
 
 def get_user_info(req):
@@ -89,4 +88,4 @@ def get_user_info(req):
                                                       'name': user.USER_NAME
                                                       })
     except ServiceError as e:
-        return response_with(resp.INVALID_FIELD_NAME_SENT_422, value={'Exception': '{}'.format(e)})
+        return response_with(resp.SQL_Execute_Error_10004, value={'Exception': '{}'.format(e)})
