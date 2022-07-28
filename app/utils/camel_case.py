@@ -26,7 +26,7 @@ def to_lower_camel_case(x):
 
 def list_key_to_lower_camel_case(parameter_list: list):
     """
-    将返回的参数key进行小驼峰法转换
+    此方法仅适用于sqlalchemy查询返回的list数据，将返回的参数key进行小驼峰法转换
     例如：[{'ID': 2.0, 'PSEUDONYM': '唐家三少', 'NAME': '张威'}]
     例如：[{'id': 2.0, 'pseudonym': '唐家三少', 'name': '张威'}]
     :param parameter_list:
@@ -36,7 +36,6 @@ def list_key_to_lower_camel_case(parameter_list: list):
     for i in range(len(parameter_list)):
         temp_dict = {}
         for k, v in parameter_list[i].items():
-            # print(k, v)
             k_result = to_lower_camel_case(k.lower())
             temp_dict[k_result] = v
         target_list.append(temp_dict)

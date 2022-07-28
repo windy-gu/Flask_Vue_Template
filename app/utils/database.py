@@ -27,6 +27,11 @@ class CRUDMixin:
 
     @classmethod
     def filter_by(cls: MODEL, **kwargs):
+        """
+        通过键对值进行精准查询
+        :param kwargs:
+        :return:
+        """
         return cls.query.filter_by(**kwargs)
 
     @classmethod

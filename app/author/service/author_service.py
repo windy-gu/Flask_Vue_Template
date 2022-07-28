@@ -16,6 +16,14 @@ def author_list(req):
         return response_with(resp.SQL_Execute_Error_10004, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
 
 
+def author_list_like(req):
+    try:
+        # print(type(req))
+        return author_dao.select_authors_filter(**req)
+    except Exception as e:
+        return response_with(resp.SQL_Execute_Error_10004, value={'Exception': 'SQL执行出现异常，{}'.format(e)})
+
+
 def update_author(req):
     try:
         id = req['id']
