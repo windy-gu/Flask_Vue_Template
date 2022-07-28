@@ -47,21 +47,31 @@ def select_authors_filter(**kwargs):
     :param args:
     :return:
     """
-    if 'pageNum' in kwargs.keys():
-        pageNum = kwargs['pageNum']
-        del kwargs['pageNum']
+    try:
+        if 'pageNum' in kwargs.keys():
+            pageNum = kwargs['pageNum']
+            del kwargs['pageNum']
+        else:
+            pageNum = 1
+        if 'pageSize' in kwargs.keys():
+            pageSize = kwargs['pageSize']
+            del kwargs['pageSize']
+        else:
+            pageSize = 10
+        temp_dict = dict_key_to_upper(kwargs)
+        if 'NAME' not in temp_dict.keys():
+            temp_dict['NAME'] = ''
+        if 'PSEUDONYM' not in temp_dict.keys():
+            temp_dict['PSEUDONYM'] = ''
+        select_data = Author.filter(Author.NAME.like('%' + temp_dict['NAME'] + '%'),
+                                    Author.PSEUDONYM.like('%' + temp_dict['PSEUDONYM'] + '%'),
+                                    Author.DELETED == 0).paginate(page=pageNum, per_page=pageSize)
+    except Exception as e:
+        return response_with(resp.SQL_Execute_Error_10004,
+                             value={"responseData": "".format(e)})
     else:
-        pageNum = 1
-    if 'pageSize' in kwargs.keys():
-        pageSize = kwargs['pageSize']
-        del kwargs['pageSize']
-    else:
-        pageSize = 10
-    temp_dict = dict_key_to_upper(kwargs)
-
-    select_data = Author.filter(Author.NAME.like('%' + temp_dict['NAME'] + '%'), Author.DELETED == 0).paginate(page=pageNum, per_page=pageSize)
-    author_schema = AuthorSchema(many=True, only=['ID', 'NAME', 'PSEUDONYM'])
-    authors_list = author_schema.dump(select_data.items)
-    return response_with(resp.SUCCESS_200,
-                         value={"responseData": list_key_to_lower_camel_case(authors_list)})
+        author_schema = AuthorSchema(many=True, only=['ID', 'NAME', 'PSEUDONYM'])
+        authors_list = author_schema.dump(select_data.items)
+        return response_with(resp.SUCCESS_200,
+                             value={"responseData": list_key_to_lower_camel_case(authors_list)})
 
