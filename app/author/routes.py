@@ -63,3 +63,12 @@ def author_list_like():
     :return:
     """
     return author_service.author_list_like(request.get_json())
+
+
+@author_bp.route('/url/execute', methods=['POST'])
+def api_execute():
+    """
+    查询author list数据
+    :return:
+    """
+    return author_service.api_execute(request.get_json())

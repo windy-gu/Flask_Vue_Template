@@ -79,6 +79,7 @@ SQL_Execute_Error_10004 = {
     'rspInf': 'Sql execute error'
 }
 
+# 返回response参数示例
 # {
 #     "rspInf": "success",
 #     "data": null,
