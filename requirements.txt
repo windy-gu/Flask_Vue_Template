@@ -1,5 +1,7 @@
 alembic==1.7.6
+certifi==2022.6.15
 cffi==1.15.1
+charset-normalizer==2.1.0
 click==8.0.4
 cryptography==37.0.4
 Flask==2.0.3
@@ -9,6 +11,7 @@ flask-marshmallow==0.14.0
 Flask-Migrate==3.1.0
 Flask-SQLAlchemy==2.5.1
 greenlet==1.1.2
+idna==3.3
 importlib-metadata==4.11.2
 importlib-resources==5.4.0
 itsdangerous==2.1.0
@@ -22,7 +25,9 @@ pycparser==2.21
 PyJWT==2.3.0
 PyMySQL==1.0.2
 python-dotenv==0.19.2
+requests==2.28.1
 six==1.16.0
 SQLAlchemy==1.4.31
+urllib3==1.26.11
 Werkzeug==2.0.3
 zipp==3.7.0
